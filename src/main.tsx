@@ -8,6 +8,8 @@ import App from './App.tsx'
 import { config } from './wagmi.ts'
 
 import './index.css'
+import { ApolloProvider } from '@apollo/client'
+import { client as ApolloClient } from './gql/client.ts'
 
 globalThis.Buffer = Buffer
 
@@ -17,7 +19,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
+      <ApolloProvider client={ApolloClient}>
         <App />
+        </ApolloProvider>
       </QueryClientProvider>
     </WagmiProvider>
   </React.StrictMode>,

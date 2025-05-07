@@ -3,19 +3,23 @@ import { useConnect } from 'wagmi'
 export function ConnectWallet() {
   const { connectors, connect, status, error } = useConnect()
 
+  const isConnecting = status === 'pending'
+
   return (
     <div>
-      <h2>Connect</h2>
+      <h2>Select a Wallet to Connect</h2>
+
       {connectors.map((connector) => (
         <button
-          key={connector.uid}
+          key={connector.id}
           onClick={() => connect({ connector })}
+          disabled={isConnecting}
         >
-          {connector.name}
+          {isConnecting ? `Connecting to ${connector.name}...` : `Connect with ${connector.name}`}
         </button>
       ))}
-      <div>{status}</div>
-      <div>{error?.message}</div>
+
+      {error && <div>{error.message}</div>}
     </div>
   )
 }
